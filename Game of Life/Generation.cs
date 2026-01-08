@@ -103,24 +103,19 @@ namespace Game_of_Life {
                 Cell[,] oldBoard = board;
                 Cell[,] newBoard = new Cell[oldBoard.GetLength(0), oldBoard.GetLength(1)];
 
-                // fill board
-                for (int n = 0; n < newBoard.GetLength(0); n++) {
-                    for (int m = 0; m < newBoard.GetLength(1); m++) {
-                        // create dead cells only
-                        newBoard[n, m] = new Cell();
-                    }
-                }
-
                 Console.WriteLine($"Generation: {generation}");
 
                 for (int x = 0; x < board.GetLength(0); x++) {
                     for (int y = 0; y < board.GetLength(1); y++) {
-                        // overpopulation
-                        if (sumNeighbours(x, y) < 2 || sumNeighbours(x, y) > 3 && oldBoard[x, y].IsAlive == true) newBoard[x, y].IsAlive = false;
-                        // gets born
-                        else if (sumNeighbours(x, y) == 3 && oldBoard[x, y].IsAlive == false) newBoard[x, y].IsAlive = true;
+                        // create dead cells in new board
+                        newBoard[x, y] = new Cell();
+                        int n = sumNeighbours(x, y);
                         // stays alive
-                        else if (sumNeighbours(x, y) == 2 || sumNeighbours(x, y) == 3 && oldBoard[x, y].IsAlive == true) newBoard[x,y].IsAlive = true;
+                        if ((n == 2 || n == 3) && oldBoard[x, y].IsAlive == true) newBoard[x, y].IsAlive = true;
+                        // gets born
+                        else if (n == 3 && oldBoard[x, y].IsAlive == false) newBoard[x, y].IsAlive = true;
+                        // overpopulation
+                        else if (n < 2 || n > 3 && oldBoard[x, y].IsAlive == true) newBoard[x, y].IsAlive = false;
                         // stays dead
                         else newBoard[x, y].IsAlive = false;
                     }
@@ -148,7 +143,6 @@ namespace Game_of_Life {
                     if (board[i,j].IsAlive) neighbours++;
                 }
             }
-
             return neighbours;
         }
 

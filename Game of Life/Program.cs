@@ -9,12 +9,12 @@ namespace Game_of_Life {
     internal class Program {
         static void Main(string[] args) {
 
-            Generation gen = new Generation(25,25,20);
+            Generation gen = new Generation(25,25,0.5);
             
-            for (int i = 0; i < 100; i ++) {
+            for (int i = 0; i < 1000; i ++) {
+                gen.Next();
                 Thread.Sleep(100);
                 Console.Clear();
-                gen.Next();
 
             }
 
