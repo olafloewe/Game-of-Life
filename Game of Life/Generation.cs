@@ -39,6 +39,21 @@ namespace Game_of_Life {
         // string to game board constructor
         public Generation(String input) {
             // TODO string deconstruction
+            Console.WriteLine(input);
+            List<int> field = new List<int>();
+            List<int> cols = new List<int>();
+            int rowCounter = 0;
+            int colCounter = 0;
+            for (int i = 0; i < input.Length; i++) {
+                
+                colCounter++;
+                if (input[i].ToString() == "\n") {
+                    rowCounter++;
+                    colCounter = 0;
+                }
+
+            }
+            Console.WriteLine(rowCounter);
         }
 
         // ============================== fill board ====================================================================================================
@@ -110,17 +125,24 @@ namespace Game_of_Life {
                         // create dead cells in new board
                         newBoard[x, y] = new Cell();
                         int n = sumNeighbours(x, y);
-                        // stays alive
+                        // stays alive / gets born
                         if ((n == 2 || n == 3) && oldBoard[x, y].IsAlive == true) newBoard[x, y].IsAlive = true;
                         // gets born
                         else if (n == 3 && oldBoard[x, y].IsAlive == false) newBoard[x, y].IsAlive = true;
-                        // overpopulation
-                        else if (n < 2 || n > 3 && oldBoard[x, y].IsAlive == true) newBoard[x, y].IsAlive = false;
+                        // over/under population
+                        else if ((n < 2 || n > 3) && oldBoard[x, y].IsAlive == true) newBoard[x, y].IsAlive = false;
                         // stays dead
                         else newBoard[x, y].IsAlive = false;
                     }
                 }
                 board = newBoard;
+
+                // TODO check for stable generation check == operator
+                if (oldBoard == newBoard) {
+                    Console.WriteLine("Stable generation reached.");
+                    Console.ReadKey();
+                }
+
                 generation++;
                 Console.WriteLine(ToString());
             }
