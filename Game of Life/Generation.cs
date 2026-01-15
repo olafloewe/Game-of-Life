@@ -58,6 +58,8 @@ namespace Game_of_Life {
                     // check if the line is not of a different length
                     if (rowLength != lengthRow1) throw new ArgumentException("Inconsistent row lengths in input string.");
 
+                    // ???????????? ???????????? ????????????
+
                     Console.WriteLine($"PRE RowCount: {rowCount}, RowLength: {lengthRow1}");
                     rowCount++;
                     Console.WriteLine($"POST RowCount: {rowCount}, RowLength: {lengthRow1}\n");
