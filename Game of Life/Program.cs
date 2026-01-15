@@ -5,7 +5,7 @@ namespace Game_of_Life {
     internal class Program {
         static void Main(string[] args) {
 
-            Generation gen = new Generation(75,25,0.2);
+            Generation gen = new Generation(26,25,0.2);
             Console.WindowHeight = Console.LargestWindowHeight - 15;
             Console.WindowWidth = Console.LargestWindowWidth - 30;
 
@@ -18,13 +18,7 @@ namespace Game_of_Life {
                 previousGeneration = new Generation(gen.ToString());
                 // evolve to the next generation
                 gen.Next();
-                /*
-                Console.WriteLine("Compare");
-                Console.WriteLine(previousGeneration == gen);
-                Console.WriteLine(previousGeneration);
-                Console.WriteLine(gen);
-                Console.ReadKey();
-                */
+
                 if (previousGeneration == gen) {
                     Console.WriteLine("Stable state reached at generation " + i);
                     break;

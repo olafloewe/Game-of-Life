@@ -39,32 +39,32 @@ namespace Game_of_Life {
         // string to game board constructor
         public Generation(String input) {
             // TODO find a better way to determine row length and column length
+            int rowCount = 0;
             int rowLength = 0;
-            
+
             // remove spaces
             input = input.Replace(" ", "");
             
             // find row length
             for (int i = 0; i < input.Length; i++) {
+                if(rowCount == 0 && input[i] != '\n') rowLength++;
                 // break on new line
-                if (input[i].ToString() == "\n") {
-                    rowLength = i;
-                    break;
+                if (input[i] == '\n') {
+                    rowCount++;
                 }
             }
-            
-            int colLength = (input.Length / rowLength) ;
-            Console.WriteLine($"RowWidth: {rowLength}, ColWidth: {colLength}");
+
+            Console.WriteLine($"RowCount: {rowCount}, RowLength: {rowLength}");
 
             // create board with dimensions
-            board = new Cell[colLength, rowLength];
+            board = new Cell[rowLength, rowCount];
 
             // remove new lines for easier indexing
-            input = input.Replace("\n", ""); 
+            input = input.Replace("\n", "");
 
-            for (int i = 0; i < colLength; i++) {
-                for (int j = 0; j < rowLength; j++) {
-                    Cell cell = new Cell((input[(i * (rowLength)) + j] != ' ' ) && (input[(i * (rowLength)) + j] != '0') && (input[(i * (rowLength)) + j] != 'O'));
+            for (int i = 0; i < rowLength; i++) {
+                for (int j = 0; j < rowCount; j++) {
+                    Cell cell = new Cell((input[(i * (rowCount)) + j] != ' ' ) && (input[(i * (rowCount)) + j] != '0') && (input[(i * (rowCount)) + j] != 'O'));
                     board[i,j] = cell;
                 }
             }
