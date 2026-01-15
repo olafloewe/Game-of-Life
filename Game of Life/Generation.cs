@@ -8,7 +8,7 @@ namespace Game_of_Life {
     internal class Generation {
 
         Cell[,] board;
-        int generation = 1;
+        public int generation = 1;
 
         // ============================== constructors ====================================================================================================
 
@@ -38,14 +38,17 @@ namespace Game_of_Life {
         
         // string to game board constructor
         public Generation(String input) {
-            int rowCount = 1;
+
             int rowLength = 0;
             int lengthRow1 = 0;
+            int rowCount = 1;
+
+            // if (input[input.Length - 1] != '\n') input += "\n";
 
             // remove spaces
             input = input.Replace(" ", "");
-            
-            // find row length
+
+            // find dimensions 
             for (int i = 0; i < input.Length; i++) {
                 // first row length
                 if (rowCount == 1 && input[i] != '\n') lengthRow1++;
@@ -58,20 +61,11 @@ namespace Game_of_Life {
                     // check if the line is not of a different length
                     if (rowLength != lengthRow1) throw new ArgumentException("Inconsistent row lengths in input string.");
 
-                    // ???????????? ???????????? ????????????
-
-                    Console.WriteLine($"PRE RowCount: {rowCount}, RowLength: {lengthRow1}");
                     rowCount++;
-                    Console.WriteLine($"POST RowCount: {rowCount}, RowLength: {lengthRow1}\n");
 
                     rowLength = 0;
                 }
             }
-
-            // rowCount++;
-
-            //debug output
-            Console.WriteLine($"FINAL RowCount: {rowCount}, RowLength: {lengthRow1}");
 
             // create board with dimensions
             board = new Cell[rowCount, lengthRow1];
@@ -81,7 +75,6 @@ namespace Game_of_Life {
 
             for (int i = 0; i < rowCount; i++) {
                 for (int j = 0; j < lengthRow1; j++) {
-                    Console.WriteLine(input[(i * (lengthRow1)) + j]);
                     Cell cell = new Cell((input[(i * (lengthRow1)) + j] != '0') && (input[(i * (lengthRow1)) + j] != 'O'));
                     board[i,j] = cell;
                 }
@@ -150,8 +143,6 @@ namespace Game_of_Life {
                 Cell[,] oldBoard = board;
                 Cell[,] newBoard = new Cell[oldBoard.GetLength(0), oldBoard.GetLength(1)];
 
-                Console.WriteLine($"Generation: {generation}");
-
                 for (int x = 0; x < board.GetLength(0); x++) {
                     for (int y = 0; y < board.GetLength(1); y++) {
                         // create dead cells in new board
@@ -212,6 +203,9 @@ namespace Game_of_Life {
         public override bool Equals(object obj) {
             return base.Equals(obj);
         }
+        public override int GetHashCode() {
+            return base.GetHashCode();
+        }
 
         // to string method to represent the board
         public override string ToString() {
@@ -220,7 +214,7 @@ namespace Game_of_Life {
                 for (int j = 0; j < board.GetLength(1); j++) {
                     boardString += $"{(board[i, j].ToString())} ";
                 }
-                boardString += "\n";
+                if(i != board.GetLength(0)-1 ) boardString += "\n";
             }
             return boardString;
         }

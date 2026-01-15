@@ -10,28 +10,32 @@ namespace Game_of_Life {
             Console.WindowWidth = Console.LargestWindowWidth - 30;
 
             Generation gen = new Generation(26,25,0.2);
-            gen = new Generation("000000\n001100\n001100\n000000");
+            // Generation gen = new Generation("100000\n001100\n001100\n000000");
+            Console.WriteLine($"Generation 0:\n{gen}");
+            Console.ReadKey();
 
             // hold the previous generation for comparison
             Generation previousGeneration;
 
             for (int i = 0; i < 1000; i ++) {
-                Console.Clear();
+                // Console settings for smooth animation
+                Console.SetCursorPosition(0, 0);
+                Console.CursorVisible = false;
+
                 // save the current generation
                 previousGeneration = new Generation(gen.ToString());
-                // evolve to the next generation
+
+                // evolve and display the next generation
+                Console.WriteLine($"Generation {gen.generation}:\n{gen}");
                 gen.Next();
-                Console.WriteLine(gen);
 
                 // check for stable state
                 if (previousGeneration == gen) {
-                    Console.WriteLine("Stable state reached at generation " + i);
+                    Console.WriteLine("\nStable state reached at generation " + i);
                     break;
                 }
 
                 Thread.Sleep(50);
-                // Console.SetCursorPosition(0,0);
-                Console.ReadKey();
             }
 
             /*
