@@ -38,38 +38,52 @@ namespace Game_of_Life {
         
         // string to game board constructor
         public Generation(String input) {
-            // TODO find a better way to determine row length and column length
-            int rowCount = 0;
+            int rowCount = 1;
             int rowLength = 0;
+            int lengthRow1 = 0;
 
             // remove spaces
             input = input.Replace(" ", "");
             
             // find row length
             for (int i = 0; i < input.Length; i++) {
-                if(rowCount == 0 && input[i] != '\n') rowLength++;
-                // break on new line
+                // first row length
+                if (rowCount == 1 && input[i] != '\n') lengthRow1++;
+
+                // row length count
+                if (input[i] != '\n') rowLength++;
+
+                // new line found
                 if (input[i] == '\n') {
+                    // check if the line is not of a different length
+                    if (rowLength != lengthRow1) throw new ArgumentException("Inconsistent row lengths in input string.");
+
+                    Console.WriteLine($"PRE RowCount: {rowCount}, RowLength: {lengthRow1}");
                     rowCount++;
+                    Console.WriteLine($"POST RowCount: {rowCount}, RowLength: {lengthRow1}\n");
+
+                    rowLength = 0;
                 }
             }
 
-            Console.WriteLine($"RowCount: {rowCount}, RowLength: {rowLength}");
+            // rowCount++;
+
+            //debug output
+            Console.WriteLine($"FINAL RowCount: {rowCount}, RowLength: {lengthRow1}");
 
             // create board with dimensions
-            board = new Cell[rowLength, rowCount];
+            board = new Cell[rowCount, lengthRow1];
 
             // remove new lines for easier indexing
             input = input.Replace("\n", "");
 
-            for (int i = 0; i < rowLength; i++) {
-                for (int j = 0; j < rowCount; j++) {
-                    Cell cell = new Cell((input[(i * (rowCount)) + j] != ' ' ) && (input[(i * (rowCount)) + j] != '0') && (input[(i * (rowCount)) + j] != 'O'));
+            for (int i = 0; i < rowCount; i++) {
+                for (int j = 0; j < lengthRow1; j++) {
+                    Console.WriteLine(input[(i * (lengthRow1)) + j]);
+                    Cell cell = new Cell((input[(i * (lengthRow1)) + j] != '0') && (input[(i * (lengthRow1)) + j] != 'O'));
                     board[i,j] = cell;
                 }
             }
-            Console.WriteLine("Generated Board:");
-            ToString();
         }
 
         // ============================== fill board ====================================================================================================
@@ -160,7 +174,6 @@ namespace Game_of_Life {
                 }
 
                 generation++;
-                Console.WriteLine(ToString());
             }
         }
 
