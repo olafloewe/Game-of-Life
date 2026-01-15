@@ -38,22 +38,38 @@ namespace Game_of_Life {
         
         // string to game board constructor
         public Generation(String input) {
-            // TODO string deconstruction
-            Console.WriteLine(input);
-            List<int> field = new List<int>();
-            List<int> cols = new List<int>();
-            int rowCounter = 0;
-            int colCounter = 0;
+            // TODO find a better way to determine row length and column length
+            int rowLength = 0;
+            
+            // remove spaces
+            input = input.Replace(" ", "");
+            
+            // find row length
             for (int i = 0; i < input.Length; i++) {
-                
-                colCounter++;
+                // break on new line
                 if (input[i].ToString() == "\n") {
-                    rowCounter++;
-                    colCounter = 0;
+                    rowLength = i;
+                    break;
                 }
-
             }
-            Console.WriteLine(rowCounter);
+            
+            int colLength = (input.Length / rowLength) ;
+            Console.WriteLine($"RowWidth: {rowLength}, ColWidth: {colLength}");
+
+            // create board with dimensions
+            board = new Cell[colLength, rowLength];
+
+            // remove new lines for easier indexing
+            input = input.Replace("\n", ""); 
+
+            for (int i = 0; i < colLength; i++) {
+                for (int j = 0; j < rowLength; j++) {
+                    Cell cell = new Cell((input[(i * (rowLength)) + j] != ' ' ) && (input[(i * (rowLength)) + j] != '0') && (input[(i * (rowLength)) + j] != 'O'));
+                    board[i,j] = cell;
+                }
+            }
+            Console.WriteLine("Generated Board:");
+            ToString();
         }
 
         // ============================== fill board ====================================================================================================
@@ -139,7 +155,7 @@ namespace Game_of_Life {
 
                 // TODO check for stable generation check == operator
                 if (oldBoard == newBoard) {
-                    Console.WriteLine("Stable generation reached.");
+                    Console.WriteLine("TEST Stable generation reached.");
                     Console.ReadKey();
                 }
 
