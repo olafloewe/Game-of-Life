@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace Game_of_Life {
     internal class Generation {
 
+        // List<int,int,Cell> boardList = new List<int, int, Cell>();
         Cell[,] board;
         public int generation = 1;
 
@@ -137,37 +138,29 @@ namespace Game_of_Life {
 
         // ============================== game rules ====================================================================================================
 
-        public void Next(int steps = 1) {
+        public void Next() {
+            Cell[,] oldBoard = board;
+            Cell[,] newBoard = new Cell[oldBoard.GetLength(0), oldBoard.GetLength(1)];
 
-            for (int i = 0; i < steps; i++) {
-                Cell[,] oldBoard = board;
-                Cell[,] newBoard = new Cell[oldBoard.GetLength(0), oldBoard.GetLength(1)];
-
-                for (int x = 0; x < board.GetLength(0); x++) {
-                    for (int y = 0; y < board.GetLength(1); y++) {
-                        // create dead cells in new board
-                        newBoard[x, y] = new Cell();
-                        int n = sumNeighbours(x, y);
-                        // stays alive / gets born
-                        if ((n == 2 || n == 3) && oldBoard[x, y].IsAlive == true) newBoard[x, y].IsAlive = true;
-                        // gets born
-                        else if (n == 3 && oldBoard[x, y].IsAlive == false) newBoard[x, y].IsAlive = true;
-                        // over/under population
-                        else if ((n < 2 || n > 3) && oldBoard[x, y].IsAlive == true) newBoard[x, y].IsAlive = false;
-                        // stays dead
-                        else newBoard[x, y].IsAlive = false;
-                    }
+            for (int x = 0; x < board.GetLength(0); x++)
+            {
+                for (int y = 0; y < board.GetLength(1); y++)
+                {
+                    // create dead cells in new board
+                    newBoard[x, y] = new Cell();
+                    int n = sumNeighbours(x, y);
+                    // stays alive / gets born
+                    if ((n == 2 || n == 3) && oldBoard[x, y].IsAlive == true) newBoard[x, y].IsAlive = true;
+                    // gets born
+                    else if (n == 3 && oldBoard[x, y].IsAlive == false) newBoard[x, y].IsAlive = true;
+                    // over/under population
+                    else if ((n < 2 || n > 3) && oldBoard[x, y].IsAlive == true) newBoard[x, y].IsAlive = false;
+                    // stays dead
+                    else newBoard[x, y].IsAlive = false;
                 }
-                board = newBoard;
-
-                // TODO check for stable generation check == operator
-                if (oldBoard == newBoard) {
-                    Console.WriteLine("TEST Stable generation reached.");
-                    Console.ReadKey();
-                }
-
-                generation++;
             }
+            board = newBoard;
+            generation++;
         }
 
         // count all neighbours of a cell, accounting for board borders
