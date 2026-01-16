@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 namespace Game_of_Life {
     internal class Generation {
 
-        // List<int,int,Cell> boardList = new List<int, int, Cell>();
+        // TODO expand board logic
+        List<List<Cell>> boardList = new List<List<Cell>>();
         Cell[,] board;
         public int generation = 1;
+        public int width { get { return board.GetLength(0); } }
+        public int height { get { return board.GetLength(1); } }
 
         // ============================== constructors ====================================================================================================
 
