@@ -7,8 +7,12 @@ using System.Threading.Tasks;
 namespace Game_of_Life {
     internal class Generation {
 
+        // TODO expand board logic
+        List<List<Cell>> boardList = new List<List<Cell>>();
         Cell[,] board;
         public int generation = 1;
+        public int width { get { return board.GetLength(0); } }
+        public int height { get { return board.GetLength(1); } }
 
         // ============================== constructors ====================================================================================================
 
@@ -137,11 +141,9 @@ namespace Game_of_Life {
 
         // ============================== game rules ====================================================================================================
 
-        public void Next(int steps = 1) {
-
-            for (int i = 0; i < steps; i++) {
-                Cell[,] oldBoard = board;
-                Cell[,] newBoard = new Cell[oldBoard.GetLength(0), oldBoard.GetLength(1)];
+        public void Next() {
+            Cell[,] oldBoard = board;
+            Cell[,] newBoard = new Cell[oldBoard.GetLength(0), oldBoard.GetLength(1)];
 
                 for (int x = 0; x < board.GetLength(0); x++) {
                     for (int y = 0; y < board.GetLength(1); y++) {

@@ -8,10 +8,7 @@ namespace Game_of_Life {
             // Set console size
             Console.WindowHeight = Console.LargestWindowHeight - 15;
             Console.WindowWidth = Console.LargestWindowWidth - 30;
-            Console.ForegroundColor = ConsoleColor.White;
 
-            Game game = new Game();
-            game.Play();
         }
     }
 } 
