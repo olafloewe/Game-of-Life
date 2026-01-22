@@ -14,4 +14,4 @@ namespace Game_of_Life {
             game.Play();
         }
     }
-}
+} 
