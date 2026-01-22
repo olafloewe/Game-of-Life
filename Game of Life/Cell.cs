@@ -16,7 +16,7 @@ namespace Game_of_Life {
         }
 
         // represent cell state
-        public override string ToString() { 
+        public override string ToString() {
             return IsAlive ? "■" : "O";
         }
     }

@@ -160,12 +160,6 @@ namespace Game_of_Life {
                 }
                 board = newBoard;
 
-                // TODO check for stable generation check == operator
-                if (oldBoard == newBoard) {
-                    Console.WriteLine("TEST Stable generation reached.");
-                    Console.ReadKey();
-                }
-
                 generation++;
             }
         }
