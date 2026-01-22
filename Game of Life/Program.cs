@@ -10,6 +10,7 @@ namespace Game_of_Life {
             Console.WindowWidth = Console.LargestWindowWidth - 30;
             Console.ForegroundColor = ConsoleColor.White;
 
+            // Game game = new Game();
             Game game = new Game();
             game.Play();
         }
