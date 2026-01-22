@@ -7,12 +7,8 @@ using System.Threading.Tasks;
 namespace Game_of_Life {
     internal class Generation {
 
-        // TODO expand board logic
-        List<List<Cell>> boardList = new List<List<Cell>>();
         Cell[,] board;
         public int generation = 1;
-        public int width { get { return board.GetLength(0); } }
-        public int height { get { return board.GetLength(1); } }
 
         // ============================== constructors ====================================================================================================
 
@@ -36,10 +32,10 @@ namespace Game_of_Life {
         }
 
         // population density constructor
-        public Generation(int x, int y, double populationDensity) : this(x,y) {
+        public Generation(int x, int y, double populationDensity) : this(x, y) {
             FillBoard(populationDensity);
         }
-        
+
         // string to game board constructor
         public Generation(String input) {
 
@@ -80,7 +76,7 @@ namespace Game_of_Life {
             for (int i = 0; i < rowCount; i++) {
                 for (int j = 0; j < lengthRow1; j++) {
                     Cell cell = new Cell((input[(i * (lengthRow1)) + j] != '0') && (input[(i * (lengthRow1)) + j] != 'O'));
-                    board[i,j] = cell;
+                    board[i, j] = cell;
                 }
             }
         }
@@ -91,7 +87,7 @@ namespace Game_of_Life {
         private void FillBoard(int livingCells) {
             // guard clause
             if (board.GetLength(0) * board.GetLength(1) < livingCells) throw new ArgumentException("Number of living cells exceeds board capacity.");
-            
+
             Random rand = new Random();
             int generatedCells = 0;
 
@@ -141,9 +137,11 @@ namespace Game_of_Life {
 
         // ============================== game rules ====================================================================================================
 
-        public void Next() {
-            Cell[,] oldBoard = board;
-            Cell[,] newBoard = new Cell[oldBoard.GetLength(0), oldBoard.GetLength(1)];
+        public void Next(int steps = 1) {
+
+            for (int i = 0; i < steps; i++) {
+                Cell[,] oldBoard = board;
+                Cell[,] newBoard = new Cell[oldBoard.GetLength(0), oldBoard.GetLength(1)];
 
                 for (int x = 0; x < board.GetLength(0); x++) {
                     for (int y = 0; y < board.GetLength(1); y++) {
@@ -180,7 +178,7 @@ namespace Game_of_Life {
             for (int i = minX; i <= limX; i++) {
                 for (int j = minY; j <= limY; j++) {
                     if (i == x && j == y) continue;
-                    if (board[i,j].IsAlive) neighbours++;
+                    if (board[i, j].IsAlive) neighbours++;
                 }
             }
             return neighbours;
@@ -210,7 +208,7 @@ namespace Game_of_Life {
                 for (int j = 0; j < board.GetLength(1); j++) {
                     boardString += $"{(board[i, j].ToString())} ";
                 }
-                if(i != board.GetLength(0)-1 ) boardString += "\n";
+                if (i != board.GetLength(0) - 1) boardString += "\n";
             }
             return boardString;
         }

@@ -11,8 +11,8 @@ namespace Game_of_Life {
         public bool IsAlive { get; set; }
 
         // default constructor sets cell to dead unless specified otherwise
-        public Cell(bool alive = false) { 
-            IsAlive = alive; 
+        public Cell(bool alive = false) {
+            IsAlive = alive;
         }
 
         // represent cell state

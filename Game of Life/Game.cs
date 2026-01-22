@@ -14,9 +14,9 @@ namespace Game_of_Life {
 
         }
 
-        public void GUI() { 
-        
-            
+        public void GUI() {
+
+
 
         }
 
@@ -39,7 +39,7 @@ namespace Game_of_Life {
         // create game from file input
         private void CreateFromFile(string input) {
             // Open the file to read from.
-            readText = File.ReadAllText(path); 
+            readText = File.ReadAllText(path);
 
             Console.WriteLine($"Generation 0:\n{gen}");
             Console.ReadKey();
@@ -80,7 +80,7 @@ namespace Game_of_Life {
                     Console.CursorVisible = false;
 
                     // save the current generation
-                    previousGeneration = new Generation(gen.ToString());                    
+                    previousGeneration = new Generation(gen.ToString());
                     // save every even generation (cycle length 1)
                     if (counter % 2 == 0) evenGeneration = new Generation(gen.ToString());
 
@@ -167,3 +167,4 @@ for (int i = 0; i < generations; i++) {
     Thread.Sleep(50);
 }
 */
+
